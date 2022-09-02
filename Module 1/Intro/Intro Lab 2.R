@@ -24,4 +24,4 @@ Q9 <- mean(Q7)
 
 
 Q10 <- Q8
-Q10[Q10 == "death_year" ] <- factor(Q7)
+Q10$death_year <- as.factor(Q10$death_year)
