@@ -7,7 +7,7 @@ Fibonacci <-c(0,1,1,2,3,5,8,12)
 Q3 <- Fibonacci[5]
 
 Q4 <- c(0,1,1,2,3,5,8,13,21,34,55)
-Q4[10] <- 99; x
+Q4[10] <- 99; 
 
 Q5 <- sum(Q4)
 
@@ -20,4 +20,4 @@ d <- (GR^34 - (1 - GR)^34)/sqrt(5)
 
 Q6 <- c(ceiling(a), ceiling(b), ceiling(c), ceiling(d))
 
-Q7 <- mean(Q6)
+Q7 <- round(mean(Q6), digits = 2)
