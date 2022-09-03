@@ -1,0 +1,161 @@
+---
+title: "Lab 1: Intro to R"
+author: "Jaime Rodriguez"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+## Data
+
+```{r}
+arbuthnot
+```
+
+
+
+### Exercise 1
+```{r view-girls-counts}
+arbuthnot$girls
+```
+
+
+
+#### Data Visualization
+Practice
+```{r}
+ggplot(data = arbuthnot, aes(x = year, y = girls)) +
+  geom_point()
+```
+
+With ggplot():
+* The first argument is always the name of the dataset you wish to use for plotting.
+* Next, you provide the variables from the dataset to be assigned to different aesthetic elements of the plot, such as the x and the y axes.
+* adding a + at the end of the line, to indicate that you are adding a layer
+* then specify the geometric object to be used to create the plot.
+
+?ggplot provides documentation for a function
+
+Example with geom_line()
+```{r}
+ggplot(data = arbuthnot, aes(x = year, y = girls)) +
+  geom_line()
+```
+
+
+
+### Exercise 2
+Beginning in approximately 1959 there was an continued steady increase in the amount of baptized girls. Further research should be conducted to view what occurred begging in that time time range.
+```{r trend-girls}
+ggplot(data = arbuthnot, aes(x = year, y = girls)) +
+  geom_line()
+```
+
+
+
+#### R as a big calculator
+Simple calculations
+```{r}
+5218 + 4683
+```
+
+```{r}
+arbuthnot$boys + arbuthnot$girls
+```
+
+#### Adding a new variable to the data frame
+Add total column to data
+```{r}
+arbuthnot <- arbuthnot %>%
+  mutate(total = boys + girls)
+```
+
+Add boy to girl ratio column
+```{r}
+arbuthnot <- arbuthnot %>%
+  mutate(boy_to_girl_ratio = boys / girls)
+```
+
+Add boy ratio column
+```{r}
+arbuthnot <- arbuthnot %>%
+  mutate(boy_ratio = boys / total)
+```
+
+
+
+### Exercise 3
+Similar to girls. Consistent growth over time. 
+```{r plot-prop-boys-arbuthnot}
+ggplot(data = arbuthnot, aes(x = year, y = boys)) +
+  geom_line()
+```
+
+
+
+#### More practice
+see min and max values
+```{r}
+arbuthnot %>%
+  summarize(min = min(boys),
+            max = max(boys)
+            )
+```
+
+
+
+### Exercise 4
+Data includes years from 1940 to 2002. 63 rows and 3 columns (year, boys, girls)
+```{r}
+present
+```
+
+```{r dim-present}
+present %>%
+  summarize(beggining = min(year),
+            ending = max(year)
+            )
+```
+
+
+
+### Exercise 5
+Ratio shows Arbuthnot numbers were much smaller but magnitude are mildly similar
+```{r count-compare}
+present <- present %>%
+  mutate(total = boys + girls)
+```
+
+```{r}
+present <- present %>%
+  mutate(total_ratio = arbuthnot$total[c(1:63)] / present$total[c(1:63)])
+```
+
+```{r}
+ggplot(data = present, aes(x = year, y = total_ratio)) +
+  geom_line()
+```
+
+
+
+### Exercise 6
+Data shows somewhat similar results. Does show growth over time. However there were more stark declines within that growth.
+```{r plot-prop-boys-present}
+ggplot(data = present, aes(x = year, y = boys)) +
+  geom_line()
+```
+
+
+
+### Exercise 7
+1961
+```{r find-max-total}
+present %>%
+  arrange(desc(total))
+```
+
+
