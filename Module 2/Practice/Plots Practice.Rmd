@@ -1,0 +1,60 @@
+---
+title: "Plots"
+author: "Jaime"
+date: "2022-09-05"
+output: html_document
+---
+
+## Plots
+
+### Basics
+```{r}
+Fibonacci <- c(1,1,2,3,5,8,13)
+
+plot(Fibonacci)
+```
+
+```{r}
+plot( x = Fibonacci,
+      main = "You specify title using the 'main' argument",
+      sub = "The subtitle appears here (Use the 'sub' argument for this)",
+      xlab = "The x-axis label is 'xlab'",
+      ylab = "The y-axis label is 'ylab'"
+      )
+```
+
+```{r}
+plot( x = Fibonacci,
+      type = "b",
+      col = "blue",
+      pch = 19,
+      cex = 5,
+      lty = 2,
+      lwd = 4
+      )
+```
+
+### Histograms
+```{r}
+library(tidyverse)
+msleep
+```
+
+```{r}
+hist(msleep$sleep_total)
+```
+
+```{r}
+hist(msleep$sleep_total, breaks = 20)
+```
+
+### Stem and Leaf Plot
+```{r}
+stem(msleep$sleep_total)
+```
+
+### Boxplots
+```{r}
+boxplot(msleep$sleep_total)
+```
+
