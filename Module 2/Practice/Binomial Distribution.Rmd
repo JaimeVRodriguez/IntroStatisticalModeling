@@ -1,0 +1,52 @@
+---
+title: "Binomial Distribution"
+author: "Jaime"
+date: "2022-09-05"
+output: html_document
+---
+
+## Binomial Distribution
+```{r}
+dbinom(x=4, size=20, prob=1/6)
+```
+
+```{r}
+dbinom(4, 20, 1/6)
+```
+
+<br>
+**If we change the parameters**
+<br>
+
+### Rolling a 4 on 20 dice rolls
+```{r}
+x <- seq(0, 20, by=1) #create sample of 20 numbers incremented by 1
+y <- dbinom(x, 20, 1/6) #create binomial distribution
+plot(x, y, type='h') #plot graph
+```
+
+### 100 coin flips
+```{r}
+x <- seq(0, 100, by=1) #create sample of 20 numbers incremented by 1
+y <- dbinom(x, 100, 1/2) #create binomial distribution
+plot(x, y, type='h') #plot graph
+```
+
+### Probably of rolling a 4,3,2, or 1 on 20 rolls
+```{r}
+dbinom(4, 20, 1/6) +
+  dbinom(3, 20, 1/6) +
+  dbinom(2, 20, 1/6) +
+  dbinom(1, 20, 1/6) 
+```
+
+### Same as above (short hand)
+```{r}
+pbinom(4, 20, 1/6)
+```
+
+### What gives us a designated probablity
+```{r}
+qbinom(p=0.75, size=20, prob=1/6)
+```
+
