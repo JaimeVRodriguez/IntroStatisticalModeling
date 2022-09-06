@@ -1,0 +1,128 @@
+---
+title: "Intoduction to Data"
+author: "Jaime"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+```{r}
+data(nycflights)
+```
+
+```{r}
+names(nycflights)
+```
+
+```{r}
+glimpse(nycflights)
+```
+
+## Analysis
+### Departure Delays
+
+```{r}
+ggplot(data = nycflights, aes(x = dep_delay)) +
+  geom_histogram()
+```
+
+```{r}
+ggplot(data = nycflights, aes(x = dep_delay)) +
+  geom_histogram(binwidth = 15)
+```
+
+```{r}
+ggplot(data = nycflights, aes(x = dep_delay)) +
+  geom_histogram(binwidth = 150)
+```
+
+### Exercise 1
+Plot 2 seems to show the most data. Plot 3 seems to "hide" a lot of the data
+
+### Filter by LAX
+```{r}
+lax_flights <- nycflights %>%
+  filter(dest == "LAX")
+ggplot(data = lax_flights, aes(x = dep_delay)) +
+  geom_histogram()
+```
+
+### LAX summary
+```{r}
+lax_flights %>%
+  summarise(mean_dd   = mean(dep_delay), 
+            median_dd = median(dep_delay), 
+            n         = n())
+```
+
+### Filter SFO in February
+```{r}
+sfo_feb_flights <- nycflights %>%
+  filter(dest == "SFO", month == 2)
+```
+
+### Exercise 2
+68
+
+### Exercise 3
+Similar to overall data. But does have outliers
+```{r}
+ggplot(data = sfo_feb_flights, aes(x = dep_delay)) +
+  geom_histogram()
+```
+
+### Exercise 4
+United Airlines with 21 delays
+```{r}
+sfo_feb_flights %>%
+  group_by(carrier) %>%
+  summarise(median_dd = median(arr_delay), iqr_dd = IQR(arr_delay), n_flights = n())
+```
+
+### Exercise 5
+Outliers could cause the data to be skewed which may not be representative of the actual lowest month. 
+
+```{r}
+nycflights <- nycflights %>%
+  mutate(dep_type = ifelse(dep_delay < 5, "on time", "delayed"))
+```
+
+```{r}
+nycflights %>%
+  group_by(origin) %>%
+  summarise(ot_dep_rate = sum(dep_type == "on time") / n()) %>%
+  arrange(desc(ot_dep_rate))
+```
+
+### Exercise 6
+LGA 72.7% on time rate
+
+### Exercise 7
+```{r}
+nycflights <- nycflights %>%
+  mutate(avg_speed = distance / (air_time / 60))
+```
+
+### Exericise 8
+It appears that the further the distance the faster the average speed
+```{r}
+ggplot(data = nycflights, aes(x = distance, y = avg_speed)) +
+  geom_point()
+```
+
+### Exercise 9
+
+```{r}
+nycflights_3carriers <- nycflights %>%
+  filter(carrier == "AA" | carrier == "DL" | carrier == "UA")
+```
+
+```{r}
+ggplot(data = nycflights_3carriers, aes(x = dep_delay, y = arr_delay, color = carrier)) +
+  geom_point()
+```
+
