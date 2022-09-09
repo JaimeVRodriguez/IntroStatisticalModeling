@@ -1,0 +1,101 @@
+---
+title: "Probability"
+author: "Jaime Rodriguez"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+```{r}
+glimpse(kobe_basket)
+```
+
+```{r}
+head(kobe_basket, 9)
+```
+
+### Exercise 1
+1 means one hit then a miss. 0 means there were no hits in that streak.
+
+
+#### Practice
+
+Streak counter of shots
+```{r}
+kobe_streak <- calc_streak(kobe_basket$shot)
+```
+
+Plotted Streak
+```{r}
+ggplot(data = kobe_streak, aes(x = length)) +
+  geom_bar()
+```
+
+### Exercise 2
+Plot above
+Longest streak length was 4 made shots in a row. 
+Typical streak length was 1 shot before missing. 
+
+### Exercise 3
+26 Heads
+```{r}
+set.seed(35797)
+coin_outcomes <- c("heads", "tails")
+sim_unfair_coin <- sample(coin_outcomes, size = 100, replace = TRUE,
+       prob = c(0.2, 0.8))
+```
+
+```{r}
+sim_unfair_coin
+table(sim_unfair_coin)
+```
+
+### Exercise 4
+
+```{r}
+shot_outcomes <- c("H", "M")
+sim_basket <- sample(shot_outcomes, size = 133, replace = TRUE,
+                     prob = c(0.45, 0.55))
+```
+
+
+### Exercise 5
+```{r}
+sim_streak <- calc_streak(sim_basket)
+```
+
+### Exercise 6
+Longest streak = 6
+Typical streak = 1
+```{r}
+ggplot(data = sim_streak, aes(x = length)) +
+  geom_bar()
+```
+### Exercise 7
+Expected result would be somewhat similar. This is due to the shooting percentage being predetermined. If this were to change, the results would differ more.
+
+### Exercise 8
+Although the simulation has higher streaks. Kobe was able to maintain higher frequency of streaks. Compared to the simulation have more non streaks. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
